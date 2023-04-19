@@ -7,6 +7,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -18,6 +19,7 @@ export default function LoginPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/login`,
@@ -54,6 +56,8 @@ export default function LoginPage() {
       setTimeout(() => {
         setError("");
       }, 5000);
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
@@ -89,8 +93,9 @@ export default function LoginPage() {
           <button
             className="border w-full my-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
             type="submit"
+            disabled={isLoading}
           >
-            Sign In
+            {isLoading ? "Sign in..." : "Sign in"}
           </button>
           <div className="flex justify-between">
             <p className="flex items-center">
