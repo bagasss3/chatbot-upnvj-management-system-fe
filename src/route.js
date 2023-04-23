@@ -6,22 +6,25 @@ import ForgotPasswordPage from "./page/forgot-password";
 import SuccessForgotPasswordPage from "./page/success-forgot-password";
 import DashboardPage from "./page/dashboard";
 import ProtectedRoutes from "./component/protectedRoute";
+import { AuthContextProvider } from "./component/shared/AuthContext";
 
 const RouterPage = () => {
   return (
     <Router>
-      <Routes>
-        <Route element={<ProtectedRoutes />}>
-          <Route exact path="/" element={<DashboardPage />} />
-        </Route>
-        <Route path="/user" element={<User />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route
-          path="/forgot-password/success"
-          element={<SuccessForgotPasswordPage />}
-        />
-      </Routes>
+      <AuthContextProvider>
+        <Routes>
+          <Route element={<ProtectedRoutes />}>
+            <Route exact path="/" element={<DashboardPage />} />
+          </Route>
+          <Route path="/user" element={<User />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route
+            path="/forgot-password/success"
+            element={<SuccessForgotPasswordPage />}
+          />
+        </Routes>
+      </AuthContextProvider>
     </Router>
   );
 };

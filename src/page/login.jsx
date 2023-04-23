@@ -1,13 +1,15 @@
 import LoginRegisterGrid from "../component/loginRegisterGrid";
-import React, { useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
+import React, { useState, useContext } from "react";
+import AuthContext from "../component/shared/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   function handleEmailChange(e) {
     setEmail(e.target.value);
@@ -21,32 +23,18 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/login`,
-        {
-          email,
-          password,
-        }
-      );
+      let payload = {
+        email,
+        password,
+      };
 
-      const {
-        access_token,
-        refresh_token,
-        access_token_expired_at,
-        refresh_token_expired_at,
-      } = response.data;
-
-      Cookies.set("accessToken", access_token, {
-        expires: new Date(access_token_expired_at),
-      });
-      Cookies.set("refreshToken", refresh_token, {
-        expires: new Date(refresh_token_expired_at),
-      });
+      await login(payload);
 
       setEmail("");
       setPassword("");
 
       console.log("Success Login");
+      navigate("/");
     } catch (error) {
       if (error.response.data.message === "unauthorized") {
         setError("wrong email or password");

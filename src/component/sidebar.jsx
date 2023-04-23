@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Sidebar } from "flowbite-react";
+import AuthContext from "./shared/AuthContext";
+
 export default function SidebarNav() {
+  const { user } = useContext(AuthContext);
+
   return (
     <Sidebar
       aria-label="Sidebar with multi-level dropdown example"
@@ -10,7 +14,9 @@ export default function SidebarNav() {
         <Sidebar.ItemGroup>
           <Sidebar.Item href="#">Dashboard</Sidebar.Item>
           <Sidebar.Collapse label="Management">
-            <Sidebar.Item href="#">Admin</Sidebar.Item>
+            {user?.role === "SUPER_ADMIN" && (
+              <Sidebar.Item href="#">Admin</Sidebar.Item>
+            )}
             <Sidebar.Item href="#">KRS Action</Sidebar.Item>
           </Sidebar.Collapse>
           <Sidebar.Item href="#">Conversation</Sidebar.Item>
@@ -21,7 +27,9 @@ export default function SidebarNav() {
           </Sidebar.Collapse>
           <Sidebar.Collapse label="Train">
             <Sidebar.Item href="#">Train Model</Sidebar.Item>
-            <Sidebar.Item href="#">Model Configuration</Sidebar.Item>
+            {user?.role === "SUPER_ADMIN" && (
+              <Sidebar.Item href="#">Model Configuration</Sidebar.Item>
+            )}
           </Sidebar.Collapse>
           <Sidebar.Item href="#">Logout</Sidebar.Item>
         </Sidebar.ItemGroup>
