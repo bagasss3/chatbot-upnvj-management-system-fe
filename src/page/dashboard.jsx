@@ -1,39 +1,30 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Navbar from "../component/navbar";
 import SidebarNav from "../component/sidebar";
-import Cookies from "js-cookie";
+import useAxios from "../interceptor/useAxios";
 
 export default function DashboardPage() {
   const [intentData, setIntentData] = useState(0);
   const [actionData, setActionData] = useState(0);
   const [utteranceData, setUtteranceData] = useState(0);
 
+  let api = useAxios();
+
   useEffect(() => {
     const fetchData = async () => {
-      const accessToken = Cookies.get("accessToken");
-      if (!accessToken) {
-        console.log("expired");
-      }
-      const config = {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      };
       try {
-        const intentResponse = await axios.get(
-          `${process.env.REACT_APP_API_URL}/intent/count`,
-          config
+        const intentResponse = await api.get(
+          `${process.env.REACT_APP_API_URL}/intent/count`
         );
         setIntentData(intentResponse.data);
 
-        const actionResponse = await axios.get(
-          `${process.env.REACT_APP_API_URL}/action/http/count`,
-          config
+        const actionResponse = await api.get(
+          `${process.env.REACT_APP_API_URL}/action/http/count`
         );
         setActionData(actionResponse.data);
 
-        const utteranceResponse = await axios.get(
-          `${process.env.REACT_APP_API_URL}/utterance/count`,
-          config
+        const utteranceResponse = await api.get(
+          `${process.env.REACT_APP_API_URL}/utterance/count`
         );
         setUtteranceData(utteranceResponse.data);
       } catch (error) {
@@ -41,7 +32,7 @@ export default function DashboardPage() {
       }
     };
     fetchData();
-  }, []);
+  }, [api]);
   return (
     <div>
       <Navbar />
