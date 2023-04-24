@@ -4,10 +4,10 @@ import { useContext } from "react";
 import AuthContext from "../component/shared/AuthContext";
 import Cookies from "js-cookie";
 
+const axiosInstance = axios.create({});
+
 const useAxios = () => {
   const { setUser } = useContext(AuthContext);
-
-  const axiosInstance = axios.create({});
 
   axiosInstance.interceptors.request.use(async (config) => {
     const currAccessToken = Cookies.get("accessToken");
