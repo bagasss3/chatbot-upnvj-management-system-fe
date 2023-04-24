@@ -12,7 +12,7 @@ export default function SidebarNav() {
     >
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="#">Dashboard</Sidebar.Item>
+          <Sidebar.Item href="/">Dashboard</Sidebar.Item>
           <Sidebar.Collapse label="Management">
             {user?.role === "SUPER_ADMIN" && (
               <Sidebar.Item href="#">Admin</Sidebar.Item>

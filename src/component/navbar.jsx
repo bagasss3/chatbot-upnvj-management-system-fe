@@ -30,7 +30,7 @@ export default function Navbar() {
                 ></path>
               </svg>
             </button>
-            <a href="https://flowbite.com" className="flex ml-2 md:mr-24">
+            <a href="/" className="flex ml-2 md:mr-24">
               <img src={UPNLogo} className="h-8 mr-3" alt="FlowBite Logo" />
               <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-black">
                 ChatVeteran
@@ -40,7 +40,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <div className="flex items-center ml-3">
               <div>
-                <a href="/">
+                <a href="/profile">
                   <img
                     className="w-8 h-8 rounded-full"
                     src={ProfileLogo}
