@@ -6,6 +6,7 @@ import ForgotPasswordPage from "./page/forgot-password";
 import SuccessForgotPasswordPage from "./page/success-forgot-password";
 import DashboardPage from "./page/dashboard";
 import ProfilePage from "./page/profile";
+import ChangePasswordPage from "./page/change-password";
 import ProtectedRoutes from "./component/protectedRoute";
 import { AuthContextProvider } from "./component/shared/AuthContext";
 
@@ -17,6 +18,11 @@ const RouterPage = () => {
           <Route element={<ProtectedRoutes />}>
             <Route exact path="/" element={<DashboardPage />} />
             <Route exact path="/profile" element={<ProfilePage />} />
+            <Route
+              exact
+              path="/profile/change-password"
+              element={<ChangePasswordPage />}
+            />
           </Route>
           <Route path="/user" element={<User />} />
           <Route path="/login" element={<LoginPage />} />
