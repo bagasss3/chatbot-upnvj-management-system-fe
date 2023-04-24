@@ -63,7 +63,7 @@ export default function LoginPage() {
                 Tanggal Akun Dibuat :{" "}
                 {new Date(userProfileData?.created_at).toLocaleDateString()}
               </h5>
-              <a href="/">
+              <a href="/profile/change-password">
                 <Button className="mt-5" color="success" pill={true}>
                   Ubah Password
                 </Button>
