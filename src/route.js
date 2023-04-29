@@ -12,6 +12,9 @@ import ProtectedRoutes from "./component/protectedRoute";
 import { AuthContextProvider } from "./component/shared/AuthContext";
 import AddAdminPage from "./page/management-admin/add-admin";
 import EditAdminPage from "./page/management-admin/edit-admin";
+import UtterancePage from "./page/utterance/utterance";
+import AddUtterancePage from "./page/utterance/add_utterance";
+import EditUtterancePage from "./page/utterance/edit-utterance";
 
 const RouterPage = () => {
   return (
@@ -29,6 +32,13 @@ const RouterPage = () => {
             <Route exact path="/admin" element={<ManagementAdminPage />} />
             <Route exact path="/admin/add" element={<AddAdminPage />} />
             <Route exact path="/admin/edit/:id" element={<EditAdminPage />} />
+            <Route exact path="/utterance" element={<UtterancePage />} />
+            <Route exact path="/utterance/add" element={<AddUtterancePage />} />
+            <Route
+              exact
+              path="/utterance/edit/:id"
+              element={<EditUtterancePage />}
+            />
           </Route>
           <Route path="/user" element={<User />} />
           <Route path="/login" element={<LoginPage />} />

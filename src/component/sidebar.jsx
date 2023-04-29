@@ -23,7 +23,7 @@ export default function SidebarNav() {
           <Sidebar.Collapse label="Component">
             <Sidebar.Item href="#">Intent</Sidebar.Item>
             <Sidebar.Item href="#">Action</Sidebar.Item>
-            <Sidebar.Item href="#">Utterance</Sidebar.Item>
+            <Sidebar.Item href="/utterance">Utterance</Sidebar.Item>
           </Sidebar.Collapse>
           <Sidebar.Collapse label="Train">
             <Sidebar.Item href="#">Train Model</Sidebar.Item>
