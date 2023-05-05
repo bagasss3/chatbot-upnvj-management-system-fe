@@ -21,7 +21,7 @@ export default function SidebarNav() {
           </Sidebar.Collapse>
           <Sidebar.Item href="#">Conversation</Sidebar.Item>
           <Sidebar.Collapse label="Component">
-            <Sidebar.Item href="#">Intent</Sidebar.Item>
+            <Sidebar.Item href="/intent">Intent</Sidebar.Item>
             <Sidebar.Item href="/action">Action</Sidebar.Item>
             <Sidebar.Item href="/utterance">Utterance</Sidebar.Item>
           </Sidebar.Collapse>
