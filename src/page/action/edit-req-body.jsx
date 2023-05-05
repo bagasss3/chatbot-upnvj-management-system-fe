@@ -97,6 +97,10 @@ export default function EditActionReqBodyPage() {
                     <Button>Add Req Body</Button>
                   </a>
                   {isLoading ? (
+                    <h2 className="text-2xl font-normal py-6 ml-3">
+                      Loading ...
+                    </h2>
+                  ) : (
                     selectedReqBody.map((action, index) => (
                       <div className="flex flex-row py-2" key={index}>
                         <input
@@ -146,10 +150,6 @@ export default function EditActionReqBodyPage() {
                         </Button>
                       </div>
                     ))
-                  ) : (
-                    <h2 className="text-2xl font-normal py-6 ml-3">
-                      Loading ...
-                    </h2>
                   )}
                 </div>
                 <Modal

@@ -1,45 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function EditUtterancePage() {
-  const { id } = useParams();
-
+export default function AddIntentPage() {
   const [name, setName] = useState("");
-  const [response, setResponse] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   let api = useAxios();
 
-  useEffect(() => {
-    async function fetchData() {
-      setIsLoading(true);
-      try {
-        const response = await api.get(
-          `${process.env.REACT_APP_API_URL}/utterance/${id}`
-        );
-        const data = response.data;
-        setName(data.name);
-        setResponse(data.response);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchData();
-  }, [api, id]);
-
   function handleNameChange(e) {
     setName(e.target.value);
-  }
-
-  function handleResponseChange(e) {
-    setResponse(e.target.value);
   }
 
   async function handleSubmit(e) {
@@ -48,21 +21,16 @@ export default function EditUtterancePage() {
     try {
       let payload = {
         name,
-        response,
       };
 
-      await api.put(
-        `${process.env.REACT_APP_API_URL}/utterance/${id}`,
-        payload
-      );
+      await api.post(`${process.env.REACT_APP_API_URL}/intent`, payload);
       setName("");
-      setResponse("");
 
-      console.log("Success Edit Utterance");
-      navigate("/utterance");
+      console.log("Success Add Intent");
+      navigate("/intent");
     } catch (error) {
       if (error.response.data.message === "unauthorized") {
-        setError("no permission to edit utterance");
+        setError("no permission to add intent");
       } else {
         setError(error.response.data.message);
       }
@@ -89,7 +57,7 @@ export default function EditUtterancePage() {
                   onSubmit={handleSubmit}
                 >
                   <h2 className="text-4xl font-bold text-center py-6">
-                    Ubah Utterance
+                    Tambah Intent
                   </h2>
                   <div className="flex flex-col py-2">
                     <input
@@ -101,23 +69,13 @@ export default function EditUtterancePage() {
                       placeholder="Enter Utterance Name"
                     />
                   </div>
-                  <div className="flex flex-col py-2">
-                    <textarea
-                      className="border p-2"
-                      id="majorId"
-                      type="text"
-                      value={response}
-                      onChange={handleResponseChange}
-                      placeholder="Choose Response"
-                    />
-                  </div>
                   {error && <div className="text-red-500 py-2">{error}</div>}
                   <button
                     className="border w-full my-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
                     type="submit"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Ubah Utterance..." : "Ubah Utterance"}
+                    {isLoading ? "Tambah Intent..." : "Tambah Intent"}
                   </button>
                 </form>
               </div>
