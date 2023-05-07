@@ -16,7 +16,13 @@ export default function AddActionReqBodyPage() {
   const [postFields, setPostFields] = useState([]);
 
   const handleAddPostField = () => {
-    const newFields = [...postFields, { req_name: "", data_type: "string" }];
+    let newFields;
+    if (method === "GET") {
+      newFields = [...postFields, { req_name: "" }];
+    } else {
+      newFields = [...postFields, { req_name: "", data_type: "string" }];
+    }
+
     setPostFields(newFields);
   };
 
@@ -39,9 +45,18 @@ export default function AddActionReqBodyPage() {
     try {
       let payload = {
         action_http_id: id,
-        post_fields: postFields,
       };
-
+      switch (method) {
+        case "GET":
+          payload["get_fields"] = postFields;
+          break;
+        case "POST":
+          payload["post_fields"] = postFields;
+          break;
+        default:
+          payload["put_fields"] = postFields;
+      }
+      console.log(payload);
       await api.post(
         `${process.env.REACT_APP_API_URL}/action/http/req`,
         payload
@@ -51,6 +66,7 @@ export default function AddActionReqBodyPage() {
       console.log("Success Add Action Req Body");
       navigate(`/action/edit/${id}/req/${method}`);
     } catch (error) {
+      console.log(error);
       if (error.response.data.message === "unauthorized") {
         setError("no permission to add action");
       } else {
@@ -92,17 +108,20 @@ export default function AddActionReqBodyPage() {
                         onChange={(event) => handlePostChange(index, event)}
                         placeholder="Enter Field Name"
                       />
-                      <select
-                        className="border p-2"
-                        name="data_type"
-                        value={field.data_type}
-                        onChange={(event) => handlePostChange(index, event)}
-                      >
-                        <option value="string">String</option>
-                        <option value="int">Int</option>
-                        <option value="float">Float</option>
-                        <option value="date">Date</option>
-                      </select>
+                      {method !== "GET" && (
+                        <select
+                          className="border p-2"
+                          name="data_type"
+                          value={field.data_type}
+                          onChange={(event) => handlePostChange(index, event)}
+                        >
+                          <option value="string">String</option>
+                          <option value="int">Int</option>
+                          <option value="float">Float</option>
+                          <option value="date">Date</option>
+                        </select>
+                      )}
+
                       <button
                         type="button"
                         onClick={() => handleDeletePostField(index)}

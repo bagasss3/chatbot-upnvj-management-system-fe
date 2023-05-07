@@ -4,6 +4,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function EditActionReqBodyPage() {
   const { id, method } = useParams();
@@ -11,6 +12,7 @@ export default function EditActionReqBodyPage() {
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   let api = useAxios();
+  const navigate = useNavigate();
 
   const [selectedReqBody, setSelectedReqBody] = useState([]);
 
@@ -19,15 +21,23 @@ export default function EditActionReqBodyPage() {
       setIsLoading(true);
       try {
         let response;
-        if (method === "POST") {
-          response = await api.get(
-            `${process.env.REACT_APP_API_URL}/action/http/${id}/req?method=POST`
-          );
-        } else {
-          response = await api.get(
-            `${process.env.REACT_APP_API_URL}/action/http/${id}/req?method=PUT`
-          );
+        switch (method) {
+          case "POST":
+            response = await api.get(
+              `${process.env.REACT_APP_API_URL}/action/http/${id}/req?method=POST`
+            );
+            break;
+          case "PUT":
+            response = await api.get(
+              `${process.env.REACT_APP_API_URL}/action/http/${id}/req?method=PUT`
+            );
+            break;
+          default:
+            response = await api.get(
+              `${process.env.REACT_APP_API_URL}/action/http/${id}/req?method=GET`
+            );
         }
+
         setSelectedReqBody(response.data);
       } catch (error) {
         console.error(error);
@@ -50,6 +60,7 @@ export default function EditActionReqBodyPage() {
       );
       // Do something with the response if needed
       console.log("success update req body");
+      navigate(`/action/edit/${id}`);
     } catch (error) {
       console.error(error);
     }
@@ -117,25 +128,29 @@ export default function EditActionReqBodyPage() {
                             setSelectedReqBody(updatedReqBody);
                           }}
                         />
-                        <select
-                          className="border p-2"
-                          type="text"
-                          name="req_name"
-                          value={action.data_type}
-                          onChange={(event) => {
-                            const updatedReqBody = selectedReqBody.map((item) =>
-                              item.id === action.id
-                                ? { ...item, data_type: event.target.value }
-                                : item
-                            );
-                            setSelectedReqBody(updatedReqBody);
-                          }}
-                        >
-                          <option value="STRING">String</option>
-                          <option value="INT">Int</option>
-                          <option value="FLOAT">Float</option>
-                          <option value="DATE">Date</option>
-                        </select>
+                        {method !== "GET" && (
+                          <select
+                            className="border p-2"
+                            type="text"
+                            name="req_name"
+                            value={action.data_type}
+                            onChange={(event) => {
+                              const updatedReqBody = selectedReqBody.map(
+                                (item) =>
+                                  item.id === action.id
+                                    ? { ...item, data_type: event.target.value }
+                                    : item
+                              );
+                              setSelectedReqBody(updatedReqBody);
+                            }}
+                          >
+                            <option value="STRING">String</option>
+                            <option value="INT">Int</option>
+                            <option value="FLOAT">Float</option>
+                            <option value="DATE">Date</option>
+                          </select>
+                        )}
+
                         <Button
                           onClick={() => handleEdit(action)}
                           className="ml-2 mr-2"

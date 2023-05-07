@@ -298,6 +298,11 @@ export default function ActionPage() {
                         placeholder="Enter Action Name"
                       />
                     </div>
+                    <div className="mt-2 mr-3 flex justify-end">
+                      <a href={`/action/${selectedActionData.id}/detail`}>
+                        <Button>Detail</Button>
+                      </a>
+                    </div>
                   </div>
                 </div>
               ) : (

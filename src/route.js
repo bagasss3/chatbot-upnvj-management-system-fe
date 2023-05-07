@@ -23,6 +23,9 @@ import EditActionReqBodyPage from "./page/action/edit-req-body";
 import IntentPage from "./page/intent/intent";
 import AddIntentPage from "./page/intent/intent-add";
 import EditIntentPage from "./page/intent/intent-edit";
+import DetailActionPage from "./page/action/detail-action/detail-action";
+import AddActionDetailPage from "./page/action/detail-action/add-detail-action";
+import UpdateActionDetailPage from "./page/action/detail-action/update-detail-action";
 
 const RouterPage = () => {
   return (
@@ -59,6 +62,21 @@ const RouterPage = () => {
               exact
               path="/action/edit/:id/req/:method"
               element={<EditActionReqBodyPage />}
+            />
+            <Route
+              exact
+              path="/action/:id/detail"
+              element={<DetailActionPage />}
+            />
+            <Route
+              exact
+              path="/action/:id/detail/add"
+              element={<AddActionDetailPage />}
+            />
+            <Route
+              exact
+              path="/action/:id/detail/edit/:dataId"
+              element={<UpdateActionDetailPage />}
             />
             <Route exact path="/intent" element={<IntentPage />} />
             <Route exact path="/intent/add" element={<AddIntentPage />} />
