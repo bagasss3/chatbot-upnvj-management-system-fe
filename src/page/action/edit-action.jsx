@@ -22,6 +22,7 @@ export default function EditActionPage() {
 
   const [, setPostFields] = useState([]);
   const [, setPutFields] = useState([]);
+  const [selectedReqBodyGet, setSelectedReqBodyGet] = useState([]);
   const [selectedReqBodyPost, setSelectedReqBodyPost] = useState([]);
   const [selectedReqBodyPut, setSelectedReqBodyPut] = useState([]);
 
@@ -41,6 +42,12 @@ export default function EditActionPage() {
         setPostHttpReq(data.post_http_req);
         setPutHttpReq(data.put_http_req);
         setTextResponse(data.text_response);
+
+        const responseGet = await api.get(
+          `${process.env.REACT_APP_API_URL}/action/http/${id}/req?method=GET`
+        );
+        setSelectedReqBodyGet(responseGet.data);
+
         if (response.data.post_http_req !== "") {
           const responsePost = await api.get(
             `${process.env.REACT_APP_API_URL}/action/http/${id}/req?method=POST`
@@ -177,6 +184,20 @@ export default function EditActionPage() {
                       placeholder="Enter Action Name"
                     />
                   </div>
+                  <a href={`/action/edit/${id}/req/GET`} className="mt-2">
+                    <Button>Edit Get Req Body</Button>
+                  </a>
+                  {selectedReqBodyGet.map((action, index) => (
+                    <div className="flex flex-row py-2" key={index}>
+                      <input
+                        className="border p-2 mr-2"
+                        type="text"
+                        name="req_name"
+                        value={action.req_name}
+                        disabled={true}
+                      />
+                    </div>
+                  ))}
                   <div className="flex flex-col py-2">
                     <label htmlFor="">Post Http Request</label>
                     <input

@@ -18,12 +18,31 @@ export default function AddActionPage() {
   const navigate = useNavigate();
   let api = useAxios();
 
+  const [getFields, setGetFields] = useState([]);
   const [postFields, setPostFields] = useState([]);
   const [putFields, setPutFields] = useState([]);
+
+  const handleAddGetField = () => {
+    const newFields = [...getFields, { req_name: "" }];
+    setGetFields(newFields);
+  };
 
   const handleAddPostField = () => {
     const newFields = [...postFields, { req_name: "", data_type: "string" }];
     setPostFields(newFields);
+  };
+
+  const handleGetChange = (index, event) => {
+    console.log(event.target.name);
+    const newFields = [...getFields];
+    newFields[index][event.target.name] = event.target.value;
+    setGetFields(newFields);
+  };
+
+  const handleDeleteGetField = (index) => {
+    const newFields = [...getFields];
+    newFields.splice(index, 1);
+    setGetFields(newFields);
   };
 
   const handlePostChange = (index, event) => {
@@ -63,6 +82,9 @@ export default function AddActionPage() {
 
   function handleGetHttpReqChange(e) {
     setGetHttpReq(e.target.value);
+    if (getHttpReq === "") {
+      setGetFields([]);
+    }
   }
 
   function handlePostHttpReqChange(e) {
@@ -110,18 +132,18 @@ export default function AddActionPage() {
         payload
       );
 
-      if (postHttpReq || putHttpReq) {
-        let payload = {
-          action_http_id: response.data.id,
-          post_fields: postFields,
-          put_fields: putFields,
-        };
+      let payload2 = {
+        action_http_id: response.data.id,
+        get_fields: getFields,
+        post_fields: postFields,
+        put_fields: putFields,
+      };
 
-        await api.post(
-          `${process.env.REACT_APP_API_URL}/action/http/req`,
-          payload
-        );
-      }
+      await api.post(
+        `${process.env.REACT_APP_API_URL}/action/http/req`,
+        payload2
+      );
+
       setName("");
       setGetHttpReq("");
       setPostHttpReq("");
@@ -129,6 +151,7 @@ export default function AddActionPage() {
       setDelHttpReq("");
       setApiKey("");
       setTextResponse("");
+      setGetFields([]);
       setPostFields([]);
       setPutFields([]);
       console.log("Success Add Action");
@@ -184,6 +207,28 @@ export default function AddActionPage() {
                       placeholder="Enter External Http Request Get Method"
                     />
                   </div>
+                  {getHttpReq && (
+                    <Button onClick={handleAddGetField}>Add Req Body</Button>
+                  )}
+                  {getHttpReq &&
+                    getFields.map((field, index) => (
+                      <div className="flex flex-row py-2" key={index}>
+                        <input
+                          className="border p-2 mr-2"
+                          type="text"
+                          name="req_name"
+                          value={field.req_name}
+                          onChange={(event) => handleGetChange(index, event)}
+                          placeholder="Enter Field Name"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteGetField(index)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ))}
                   <div className="flex flex-col py-2">
                     <input
                       className="border p-2"
