@@ -26,6 +26,11 @@ import EditIntentPage from "./page/intent/intent-edit";
 import DetailActionPage from "./page/action/detail-action/detail-action";
 import AddActionDetailPage from "./page/action/detail-action/add-detail-action";
 import UpdateActionDetailPage from "./page/action/detail-action/update-detail-action";
+import ConversationPage from "./page/conversation/conversation";
+import AddRulePage from "./page/conversation/add-rule";
+import EditRulePage from "./page/conversation/edit-rule";
+import AddStoryPage from "./page/conversation/add-story";
+import EditStoryPage from "./page/conversation/edit-story";
 
 const RouterPage = () => {
   return (
@@ -81,6 +86,27 @@ const RouterPage = () => {
             <Route exact path="/intent" element={<IntentPage />} />
             <Route exact path="/intent/add" element={<AddIntentPage />} />
             <Route exact path="/intent/edit/:id" element={<EditIntentPage />} />
+            <Route exact path="/conversation" element={<ConversationPage />} />
+            <Route
+              exact
+              path="/conversation/rule/add"
+              element={<AddRulePage />}
+            />
+            <Route
+              exact
+              path="/conversation/rule/edit/:id"
+              element={<EditRulePage />}
+            />
+            <Route
+              exact
+              path="/conversation/story/add"
+              element={<AddStoryPage />}
+            />
+            <Route
+              exact
+              path="/conversation/story/edit/:id"
+              element={<EditStoryPage />}
+            />
           </Route>
           <Route path="/user" element={<User />} />
           <Route path="/login" element={<LoginPage />} />
