@@ -19,7 +19,7 @@ export default function SidebarNav() {
             )}
             <Sidebar.Item href="#">KRS Action</Sidebar.Item>
           </Sidebar.Collapse>
-          <Sidebar.Item href="#">Conversation</Sidebar.Item>
+          <Sidebar.Item href="/conversation">Conversation</Sidebar.Item>
           <Sidebar.Collapse label="Component">
             <Sidebar.Item href="/intent">Intent</Sidebar.Item>
             <Sidebar.Item href="/action">Action</Sidebar.Item>

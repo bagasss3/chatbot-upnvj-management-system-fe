@@ -132,7 +132,7 @@ export default function EditActionReqBodyPage() {
                           <select
                             className="border p-2"
                             type="text"
-                            name="req_name"
+                            name="data_type"
                             value={action.data_type}
                             onChange={(event) => {
                               const updatedReqBody = selectedReqBody.map(
