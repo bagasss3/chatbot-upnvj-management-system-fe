@@ -31,6 +31,11 @@ import AddRulePage from "./page/conversation/add-rule";
 import EditRulePage from "./page/conversation/edit-rule";
 import AddStoryPage from "./page/conversation/add-story";
 import EditStoryPage from "./page/conversation/edit-story";
+import KrsActionPage from "./page/krs_action/krs_action";
+import AddKrsActionPage from "./page/krs_action/add-krs_action";
+import EditKrsActionPage from "./page/krs_action/edit-krs_action";
+import TrainingModelPage from "./page/training/train_model";
+import ModelConfigurationPage from "./page/training/model_conf";
 
 const RouterPage = () => {
   return (
@@ -106,6 +111,27 @@ const RouterPage = () => {
               exact
               path="/conversation/story/edit/:id"
               element={<EditStoryPage />}
+            />
+            <Route exact path="/action/krs" element={<KrsActionPage />} />
+            <Route
+              exact
+              path="/action/krs/add"
+              element={<AddKrsActionPage />}
+            />
+            <Route
+              exact
+              path="/action/krs/edit/:id"
+              element={<EditKrsActionPage />}
+            />
+            <Route
+              exact
+              path="/training-history"
+              element={<TrainingModelPage />}
+            />
+            <Route
+              exact
+              path="/model-configuration"
+              element={<ModelConfigurationPage />}
             />
           </Route>
           <Route path="/user" element={<User />} />

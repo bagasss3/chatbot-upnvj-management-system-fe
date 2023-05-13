@@ -3,7 +3,7 @@ import { Sidebar } from "flowbite-react";
 import AuthContext from "./shared/AuthContext";
 
 export default function SidebarNav() {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <Sidebar
@@ -17,7 +17,7 @@ export default function SidebarNav() {
             {user?.role === "SUPER_ADMIN" && (
               <Sidebar.Item href="/admin">Admin</Sidebar.Item>
             )}
-            <Sidebar.Item href="#">KRS Action</Sidebar.Item>
+            <Sidebar.Item href="/action/krs">KRS Action</Sidebar.Item>
           </Sidebar.Collapse>
           <Sidebar.Item href="/conversation">Conversation</Sidebar.Item>
           <Sidebar.Collapse label="Component">
@@ -26,12 +26,22 @@ export default function SidebarNav() {
             <Sidebar.Item href="/utterance">Utterance</Sidebar.Item>
           </Sidebar.Collapse>
           <Sidebar.Collapse label="Train">
-            <Sidebar.Item href="#">Train Model</Sidebar.Item>
+            <Sidebar.Item href="/training-history">Train Model</Sidebar.Item>
             {user?.role === "SUPER_ADMIN" && (
-              <Sidebar.Item href="#">Model Configuration</Sidebar.Item>
+              <Sidebar.Item href="/model-configuration">
+                Model Configuration
+              </Sidebar.Item>
             )}
           </Sidebar.Collapse>
-          <Sidebar.Item href="#">Logout</Sidebar.Item>
+          <Sidebar.Item>
+            <button
+              className="w-full text-left"
+              type="button"
+              onClick={() => logout()}
+            >
+              Logout
+            </button>
+          </Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>

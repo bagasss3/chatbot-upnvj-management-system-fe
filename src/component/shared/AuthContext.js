@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useState } from "react";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -40,12 +41,27 @@ export const AuthContextProvider = ({ children }) => {
     setUser(jwt_decode(access_token));
   };
 
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    await axios.delete(
+      `${process.env.REACT_APP_API_URL}/logout/${user.userID}`
+    );
+
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+
+    setUser(null);
+    navigate("/login");
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
         login,
         setUser,
+        logout,
       }}
     >
       {children}
