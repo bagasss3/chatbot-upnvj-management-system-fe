@@ -89,6 +89,7 @@ export default function ModelConfigurationPage() {
         ted_policy_epoch: parseInt(tedPolicyEpoch),
         fallback_utterance_id: selectedInputUtterance,
         fallback_treshold: parseFloat(rulePolicyFallbackTreshold),
+        unexpected_intent_policy_epoch: parseInt(unexpectedIntentPolicyEpoch),
       };
 
       await api.put(
