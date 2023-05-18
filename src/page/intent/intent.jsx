@@ -475,15 +475,17 @@ export default function IntentPage() {
                           >
                             {isLoading ? "Menyimpan Entity ..." : "Lanjut"}
                           </button>
-                          <button
-                            className="border w-full my-2 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                            disabled={isLoading}
-                            type="button"
-                            onClick={handleEntityCancelButton}
-                          >
-                            {isLoading ? "Batal ..." : "Batal"}
-                          </button>
                         </div>
+                      )}
+                      {showEntityInput && (
+                        <button
+                          className="border w-full my-2 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
+                          disabled={isLoading}
+                          type="button"
+                          onClick={handleEntityCancelButton}
+                        >
+                          {isLoading ? "Batal ..." : "Batal"}
+                        </button>
                       )}
                       <button
                         className="border w-full my-2 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
