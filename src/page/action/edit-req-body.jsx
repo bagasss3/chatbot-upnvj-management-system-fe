@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal } from "flowbite-react";
+import { Button } from "flowbite-react";
 import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
@@ -8,13 +8,63 @@ import { useNavigate } from "react-router-dom";
 
 export default function EditActionReqBodyPage() {
   const { id, method } = useParams();
-  const [deleteActionId, setDeleteActionId] = useState(null);
-  const [deleteIndex, setDeleteIndex] = useState(null);
+  const [selectedReqBody, setSelectedReqBody] = useState([]);
+
+  const [postFields, setPostFields] = useState([]);
+  const [putFields, setPutFields] = useState([]);
+  const [deleteFields, setDeleteFields] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
   let api = useAxios();
   const navigate = useNavigate();
 
-  const [selectedReqBody, setSelectedReqBody] = useState([]);
+  const handleAddPostField = () => {
+    let newFields;
+    if (method === "GET") {
+      newFields = [...postFields, { req_name: "" }];
+    } else {
+      newFields = [...postFields, { req_name: "", data_type: "string" }];
+    }
+
+    setPostFields(newFields);
+  };
+
+  const handlePostChange = (index, event) => {
+    console.log(event.target.name);
+    const newFields = [...postFields];
+    newFields[index][event.target.name] = event.target.value;
+    setPostFields(newFields);
+  };
+
+  const handlePutChange = (index, event) => {
+    const newFields = [...selectedReqBody];
+    newFields[index][event.target.name] = event.target.value;
+    setSelectedReqBody(newFields);
+
+    const newUpdatedReqBody = [...putFields, selectedReqBody[index]];
+    setPutFields(newUpdatedReqBody);
+  };
+
+  const handleDeletePostField = (index) => {
+    const newFields = [...postFields];
+    newFields.splice(index, 1);
+    setPostFields(newFields);
+  };
+
+  const handleDeletePutField = (index) => {
+    const deletedField = [...deleteFields, selectedReqBody[index]];
+    setDeleteFields(deletedField);
+
+    const newFieldsReq = [...selectedReqBody];
+    newFieldsReq.splice(index, 1);
+    setSelectedReqBody(newFieldsReq);
+
+    const newFields = [...putFields];
+    newFields.splice(index, 1);
+    setPutFields(newFields);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -48,45 +98,65 @@ export default function EditActionReqBodyPage() {
     fetchData();
   }, [api, id, method]);
 
-  const handleEdit = async (action) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
     try {
-      const payload = {
-        req_name: action.req_name,
-        data_type: action.data_type,
-      };
-      await api.put(
-        `${process.env.REACT_APP_API_URL}/action/http/${id}/req/${action.id}`,
-        payload
-      );
+      if (putFields.length > 0) {
+        for (let index = 0; index < putFields.length; index++) {
+          const payload = {
+            req_name: putFields[index].req_name,
+            data_type: putFields[index].data_type,
+          };
+          await api.put(
+            `${process.env.REACT_APP_API_URL}/action/http/${id}/req/${putFields[index].id}`,
+            payload
+          );
+        }
+      }
+
+      setPutFields([]);
+
+      if (postFields.length > 0) {
+        let payload = {
+          action_http_id: id,
+        };
+        switch (method) {
+          case "GET":
+            payload["get_fields"] = postFields;
+            break;
+          case "POST":
+            payload["post_fields"] = postFields;
+            break;
+          default:
+            payload["put_fields"] = postFields;
+        }
+        await api.post(
+          `${process.env.REACT_APP_API_URL}/action/http/req`,
+          payload
+        );
+      }
+      setPostFields([]);
+
+      if (deleteFields.length > 0) {
+        for (let index = 0; index < deleteFields.length; index++) {
+          await api.delete(
+            `${process.env.REACT_APP_API_URL}/action/http/${id}/req/${deleteFields[index].id}`
+          );
+        }
+      }
+      setDeleteFields([]);
       // Do something with the response if needed
       console.log("success update req body");
       navigate(`/action/edit/${id}`);
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  const onClickDelete = (index) => {
-    setDeleteIndex(index);
-    const userIdToDelete = selectedReqBody[index].id;
-    setDeleteActionId(userIdToDelete);
-  };
-
-  const handleDelete = async () => {
-    try {
-      await api.delete(
-        `${process.env.REACT_APP_API_URL}/action/http/${id}/req/${deleteActionId}`
-      );
-      // Success message or redirect to table page
-      console.log("success delete Req Body");
-      setSelectedReqBody((prevData) =>
-        prevData.filter((action, index) => index !== deleteIndex)
-      );
-    } catch (error) {
-      console.log(error);
-      // Error message
+      setError(error.response.data.message);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
     } finally {
-      setDeleteActionId(null);
+      setIsLoading(false);
     }
   };
 
@@ -100,13 +170,14 @@ export default function EditActionReqBodyPage() {
           <div className="grid grid-cols-6 gap-4">
             <div className="col-start-2 col-span-4 ...">
               <div className="flex flex-col items-center">
-                <div className="max-w-[400px] w-full mx-auto bg-white p-4">
+                <form
+                  className="max-w-[400px] w-full mx-auto bg-white p-4"
+                  onSubmit={handleSubmit}
+                >
                   <h2 className="text-4xl font-bold text-center py-6">
-                    Ubah Request Body Action
+                    Ubah Request Body Action Method {method}
                   </h2>
-                  <a href={`/action/edit/${id}/req/${method}/add`}>
-                    <Button>Add Req Body</Button>
-                  </a>
+                  <Button onClick={handleAddPostField}>Add Req Body</Button>
                   {isLoading ? (
                     <h2 className="text-2xl font-normal py-6 ml-3">
                       Loading ...
@@ -119,14 +190,7 @@ export default function EditActionReqBodyPage() {
                           type="text"
                           name="req_name"
                           value={action.req_name}
-                          onChange={(event) => {
-                            const updatedReqBody = selectedReqBody.map((item) =>
-                              item.id === action.id
-                                ? { ...item, req_name: event.target.value }
-                                : item
-                            );
-                            setSelectedReqBody(updatedReqBody);
-                          }}
+                          onChange={(event) => handlePutChange(index, event)}
                         />
                         {method !== "GET" && (
                           <select
@@ -134,15 +198,7 @@ export default function EditActionReqBodyPage() {
                             type="text"
                             name="data_type"
                             value={action.data_type}
-                            onChange={(event) => {
-                              const updatedReqBody = selectedReqBody.map(
-                                (item) =>
-                                  item.id === action.id
-                                    ? { ...item, data_type: event.target.value }
-                                    : item
-                              );
-                              setSelectedReqBody(updatedReqBody);
-                            }}
+                            onChange={(event) => handlePutChange(index, event)}
                           >
                             <option value="STRING">String</option>
                             <option value="INT">Int</option>
@@ -152,13 +208,7 @@ export default function EditActionReqBodyPage() {
                         )}
 
                         <Button
-                          onClick={() => handleEdit(action)}
-                          className="ml-2 mr-2"
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          onClick={() => onClickDelete(index)}
+                          onClick={() => handleDeletePutField(index)}
                           className="ml-2 mr-2"
                         >
                           Delete
@@ -166,27 +216,47 @@ export default function EditActionReqBodyPage() {
                       </div>
                     ))
                   )}
-                </div>
-                <Modal
-                  show={deleteActionId !== null}
-                  size="md"
-                  popup={true}
-                  onClose={() => setDeleteActionId(null)}
-                >
-                  <Modal.Header />
-                  <Modal.Body>
-                    <div className="text-center">
-                      <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        Are you sure you want to delete this product?
-                      </h3>
-                      <div className="flex justify-center gap-4">
-                        <Button color="failure" onClick={handleDelete}>
-                          Yes, I'm sure
-                        </Button>
-                      </div>
+                  {postFields.map((field, index) => (
+                    <div className="flex flex-row py-2" key={index}>
+                      <input
+                        className="border p-2 mr-2"
+                        type="text"
+                        name="req_name"
+                        value={field.req_name}
+                        onChange={(event) => handlePostChange(index, event)}
+                        placeholder="Enter Field Name"
+                      />
+                      {method !== "GET" && (
+                        <select
+                          className="border p-2"
+                          name="data_type"
+                          value={field.data_type}
+                          onChange={(event) => handlePostChange(index, event)}
+                        >
+                          <option value="string">String</option>
+                          <option value="int">Int</option>
+                          <option value="float">Float</option>
+                          <option value="date">Date</option>
+                        </select>
+                      )}
+                      <Button
+                        type="button"
+                        onClick={() => handleDeletePostField(index)}
+                        className="ml-2 mr-2"
+                      >
+                        Delete
+                      </Button>
                     </div>
-                  </Modal.Body>
-                </Modal>
+                  ))}
+                  {error && <div className="text-red-500 py-2">{error}</div>}
+                  <button
+                    className="border w-full my-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
+                    type="submit"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Menyimpan Perubahan..." : "Simpan Perubahan"}
+                  </button>
+                </form>
               </div>
             </div>
           </div>

@@ -8,6 +8,9 @@ import useAxios from "../../interceptor/useAxios";
 export default function TrainingModelPage() {
   const [trainingHistoryData, setTrainingHistoryData] = useState([]);
   const [startTrain, setStartTrain] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   let api = useAxios();
 
   const onClickTrainData = () => {
@@ -27,6 +30,27 @@ export default function TrainingModelPage() {
     };
     fetchData();
   }, [api]);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      await api.get(`${process.env.REACT_APP_API_URL}/train`);
+      setStartTrain(false);
+      setSuccess("Success Train New Data Model");
+      setTimeout(() => {
+        setSuccess("");
+      }, 25000);
+    } catch (err) {
+      setStartTrain(false);
+      setError(err.response.data.message);
+      setTimeout(() => {
+        setError("");
+      }, 25000);
+    } finally {
+      setIsLoading(false);
+    }
+  }
   return (
     <div>
       <Navbar />
@@ -38,6 +62,8 @@ export default function TrainingModelPage() {
               Training Model
             </h5>
           </div>
+          {success && <div className="text-green-500 py-2">{success}</div>}
+          {error && <div className="text-red-500 py-2">{error}</div>}
           <div className="grid grid-cols-6 gap-4">
             <div className="col-start-2 col-span-4 ...">
               <div className="flex flex-col items-center">
@@ -96,7 +122,9 @@ export default function TrainingModelPage() {
                       melanjutkan Proses?
                     </h3>
                     <div className="flex justify-center gap-4">
-                      <Button color="success">Yes, I'm sure</Button>
+                      <Button onClick={handleSubmit} color="success">
+                        {isLoading ? "Training Data..." : "Ya"}
+                      </Button>
                     </div>
                   </div>
                 </Modal.Body>
