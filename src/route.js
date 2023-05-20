@@ -17,7 +17,6 @@ import AddUtterancePage from "./page/utterance/add_utterance";
 import EditUtterancePage from "./page/utterance/edit-utterance";
 import ActionPage from "./page/action/action";
 import AddActionPage from "./page/action/add-action";
-import AddActionReqBodyPage from "./page/action/add-req-body";
 import EditActionPage from "./page/action/edit-action";
 import EditActionReqBodyPage from "./page/action/edit-req-body";
 import IntentPage from "./page/intent/intent";
@@ -62,11 +61,6 @@ const RouterPage = () => {
             />
             <Route exact path="/action" element={<ActionPage />} />
             <Route exact path="/action/add" element={<AddActionPage />} />
-            <Route
-              exact
-              path="/action/edit/:id/req/:method/add"
-              element={<AddActionReqBodyPage />}
-            />
             <Route exact path="/action/edit/:id" element={<EditActionPage />} />
             <Route
               exact

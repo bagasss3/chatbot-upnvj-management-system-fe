@@ -92,7 +92,7 @@ export default function AddUtterancePage() {
                     type="submit"
                     disabled={isLoading}
                   >
-                    {isLoading ? "Tambah Admin..." : "Tambah Admin"}
+                    {isLoading ? "Tambah Utterance..." : "Tambah Utterance"}
                   </button>
                 </form>
               </div>
