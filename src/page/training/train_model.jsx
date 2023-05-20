@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Modal, Button } from "flowbite-react";
+import { Table, Modal, Button, Alert } from "flowbite-react";
 import Navbar from "../../component/navbar";
 import TrainingLogo from "../../asset/login_training.svg";
 import SidebarNav from "../../component/sidebar";
@@ -38,15 +38,9 @@ export default function TrainingModelPage() {
       await api.get(`${process.env.REACT_APP_API_URL}/train`);
       setStartTrain(false);
       setSuccess("Success Train New Data Model");
-      setTimeout(() => {
-        setSuccess("");
-      }, 25000);
     } catch (err) {
       setStartTrain(false);
       setError(err.response.data.message);
-      setTimeout(() => {
-        setError("");
-      }, 25000);
     } finally {
       setIsLoading(false);
     }
@@ -62,8 +56,20 @@ export default function TrainingModelPage() {
               Training Model
             </h5>
           </div>
-          {success && <div className="text-green-500 py-2">{success}</div>}
-          {error && <div className="text-red-500 py-2">{error}</div>}
+          {success && (
+            <Alert color="success" onDismiss={() => setSuccess("")}>
+              <span>
+                <span className="font-medium">Info:</span> {success}
+              </span>
+            </Alert>
+          )}
+          {error && (
+            <Alert color="failure" onDismiss={() => setError("")}>
+              <span>
+                <span className="font-medium">Info Error:</span> {error}
+              </span>
+            </Alert>
+          )}
           <div className="grid grid-cols-6 gap-4">
             <div className="col-start-2 col-span-4 ...">
               <div className="flex flex-col items-center">

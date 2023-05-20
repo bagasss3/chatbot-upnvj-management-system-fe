@@ -66,7 +66,7 @@ export default function AddIntentPage() {
                       type="text"
                       value={name}
                       onChange={handleNameChange}
-                      placeholder="Enter Utterance Name"
+                      placeholder="Enter Intent Name"
                     />
                   </div>
                   {error && <div className="text-red-500 py-2">{error}</div>}
