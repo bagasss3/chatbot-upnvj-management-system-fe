@@ -35,6 +35,7 @@ import AddKrsActionPage from "./page/krs_action/add-krs_action";
 import EditKrsActionPage from "./page/krs_action/edit-krs_action";
 import TrainingModelPage from "./page/training/train_model";
 import ModelConfigurationPage from "./page/training/model_conf";
+import FallbackChatLogPage from "./page/fallback_chat_log";
 
 const RouterPage = () => {
   return (
@@ -43,6 +44,7 @@ const RouterPage = () => {
         <Routes>
           <Route element={<ProtectedRoutes />}>
             <Route exact path="/" element={<DashboardPage />} />
+            <Route exact path="/log" element={<FallbackChatLogPage />} />
             <Route exact path="/profile" element={<ProfilePage />} />
             <Route
               exact
