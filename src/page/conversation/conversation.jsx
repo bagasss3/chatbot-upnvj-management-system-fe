@@ -146,11 +146,9 @@ export default function ConversationPage() {
                       </button>
                     </div>
                     <div>
-                      <a href="/">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                          {story.story_title}
-                        </h5>
-                      </a>
+                      <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {story.story_title}
+                      </h5>
                       <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         Story
                       </p>
@@ -192,20 +190,20 @@ export default function ConversationPage() {
                     className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative"
                     key={rule.id}
                   >
-                    <div className="flex justify-end">
-                      <button
-                        onClick={() => onClickDelete(index)}
-                        className="mb-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                      >
-                        Delete
-                      </button>
-                    </div>
+                    {rule.id !== "1" && (
+                      <div className="flex justify-end">
+                        <button
+                          onClick={() => onClickDelete(index)}
+                          className="mb-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
                     <div>
-                      <a href="/">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                          {rule.rule_title}
-                        </h5>
-                      </a>
+                      <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {rule.rule_title}
+                      </h5>
                       <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         Rule
                       </p>
@@ -274,7 +272,7 @@ export default function ConversationPage() {
           <Modal.Body>
             <div className="text-center">
               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                Are you sure you want to delete this product?
+                Are you sure you want to delete this rule?
               </h3>
               <div className="flex justify-center gap-4">
                 <Button color="failure" onClick={handleDelete}>
@@ -294,7 +292,7 @@ export default function ConversationPage() {
           <Modal.Body>
             <div className="text-center">
               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                Are you sure you want to delete this product?
+                Are you sure you want to delete this story?
               </h3>
               <div className="flex justify-center gap-4">
                 <Button color="failure" onClick={handleDeleteStory}>

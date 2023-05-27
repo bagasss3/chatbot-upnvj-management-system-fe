@@ -206,9 +206,15 @@ export default function EditStoryPage() {
                             handleExistingInput(index, event)
                           }
                         >
-                          <option value="" disabled>
-                            {`Select ${step.type}`}
-                          </option>
+                          {inputUtteranceOptions.length <= 0 ? (
+                            <option value="" disabled selected>
+                              {`Select ${step.type}`}
+                            </option>
+                          ) : (
+                            <option value="" disabled>
+                              {`Select ${step.type}`}
+                            </option>
+                          )}
                           {step.type === "UTTERANCE" &&
                             inputUtteranceOptions.map((input) => (
                               <option key={input.id} value={input.id}>
@@ -216,11 +222,13 @@ export default function EditStoryPage() {
                               </option>
                             ))}
                           {step.type === "INTENT" &&
-                            inputIntentOptions.map((input) => (
-                              <option key={input.id} value={input.id}>
-                                {input.name}
-                              </option>
-                            ))}
+                            inputIntentOptions
+                              .filter((input) => input.id !== "1")
+                              .map((input) => (
+                                <option key={input.id} value={input.id}>
+                                  {input.name}
+                                </option>
+                              ))}
                           {step.type === "ACTION_HTTP" &&
                             inputActionOptions.map((input) => (
                               <option key={input.id} value={input.id}>

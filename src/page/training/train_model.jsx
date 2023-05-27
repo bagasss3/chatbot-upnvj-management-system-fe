@@ -35,8 +35,9 @@ export default function TrainingModelPage() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await api.get(`${process.env.REACT_APP_API_URL}/train`);
+      const res = await api.get(`${process.env.REACT_APP_API_URL}/train`);
       setStartTrain(false);
+      setTrainingHistoryData([...trainingHistoryData, res.data]);
       setSuccess("Success Train New Data Model");
     } catch (err) {
       setStartTrain(false);

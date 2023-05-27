@@ -67,6 +67,7 @@ export default function EditRulePage() {
         );
       }
       setInputOptions(responseOptions.data);
+      console.log(responseOptions.data);
       setShowInputs(true);
     };
     if (inputType) {
@@ -182,15 +183,24 @@ export default function EditRulePage() {
                       id="input-list"
                       value={selectedIntentInput}
                       onChange={handleSelectedIntentInput}
+                      disabled={selectedIntentInput === "1"}
                     >
                       <option value="" disabled>
                         Select Intent
                       </option>
-                      {inputIntentOptions.map((input) => (
-                        <option key={input.id} value={input.id}>
-                          {input.name}
-                        </option>
-                      ))}
+                      {selectedIntentInput === "1"
+                        ? inputIntentOptions.map((input) => (
+                            <option key={input.id} value={input.id}>
+                              {input.name}
+                            </option>
+                          ))
+                        : inputIntentOptions
+                            .filter((input) => input.id !== "1")
+                            .map((input) => (
+                              <option key={input.id} value={input.id}>
+                                {input.name}
+                              </option>
+                            ))}
                     </select>
                   </div>
                   {/* ADD HERE */}
@@ -221,9 +231,15 @@ export default function EditRulePage() {
                         value={selectedInput}
                         onChange={handleSelectedInput}
                       >
-                        <option value="" disabled>
-                          Select option
-                        </option>
+                        {inputOptions.length <= 0 ? (
+                          <option value="" disabled selected>
+                            Select option
+                          </option>
+                        ) : (
+                          <option value="" disabled>
+                            Select option
+                          </option>
+                        )}
                         {inputOptions.map((input) => (
                           <option key={input.id} value={input.id}>
                             {input.name}

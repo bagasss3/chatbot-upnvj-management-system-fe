@@ -153,11 +153,13 @@ export default function AddStoryPage() {
                               </option>
                             ))}
                           {step.type === "INTENT" &&
-                            inputIntentOptions.map((input) => (
-                              <option key={input.id} value={input.id}>
-                                {input.name}
-                              </option>
-                            ))}
+                            inputIntentOptions
+                              .filter((input) => input.id !== "1")
+                              .map((input) => (
+                                <option key={input.id} value={input.id}>
+                                  {input.name}
+                                </option>
+                              ))}
                           {step.type === "ACTION_HTTP" &&
                             inputActionOptions.map((input) => (
                               <option key={input.id} value={input.id}>

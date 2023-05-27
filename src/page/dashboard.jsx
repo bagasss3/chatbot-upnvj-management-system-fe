@@ -95,23 +95,27 @@ export default function DashboardPage() {
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 Top 5 Intent
               </h5>
-              <Table>
-                <Table.Body className="divide-y">
-                  {topIntentData.map((intent, index) => (
-                    <Table.Row
-                      className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                      key={intent?.id}
-                    >
-                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                        {intent?.intent.name}
-                      </Table.Cell>
-                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                        {intent?.mention}
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table>
+              {topIntentData.length > 0 ? (
+                <Table>
+                  <Table.Body className="divide-y">
+                    {topIntentData.map((intent, index) => (
+                      <Table.Row
+                        className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                        key={intent?.id}
+                      >
+                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                          {intent?.intent.name}
+                        </Table.Cell>
+                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                          {intent?.mention}
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
+              ) : (
+                <h2 className="text-1xl font-bold py-6">Empty Intent</h2>
+              )}
             </a>
             <a
               href="/log"
