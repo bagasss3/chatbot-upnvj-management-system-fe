@@ -150,11 +150,13 @@ export default function AddRulePage() {
                       <option value="" disabled>
                         Select Intent
                       </option>
-                      {inputIntentOptions.map((input) => (
-                        <option key={input.id} value={input.id}>
-                          {input.name}
-                        </option>
-                      ))}
+                      {inputIntentOptions
+                        .filter((input) => input.id !== "1")
+                        .map((input) => (
+                          <option key={input.id} value={input.id}>
+                            {input.name}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   {/* ADD HERE */}

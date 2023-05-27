@@ -159,7 +159,9 @@ export default function UtterancePage() {
               {selectedUtteranceData ? (
                 <div>
                   <h2 className="text-2xl font-bold py-6 ml-3">Response</h2>
-                  <p className="ml-3">{selectedUtteranceData.response}</p>
+                  <p disabled className="ml-3">
+                    {selectedUtteranceData.response}
+                  </p>
                   {/* Add any other fields that you want to display here */}
                 </div>
               ) : (
@@ -178,7 +180,7 @@ export default function UtterancePage() {
               <Modal.Body>
                 <div className="text-center">
                   <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    Are you sure you want to delete this product?
+                    Are you sure you want to delete this utterance?
                   </h3>
                   <div className="flex justify-center gap-4">
                     <Button color="failure" onClick={handleDelete}>

@@ -65,6 +65,7 @@ export default function ModelConfigurationPage() {
         setTedPolicyEpoch(data.ted_policy_epoch);
         setSelectedInputUtterance(data.fallback_utterance_id);
         setRulePolicyFallbackTreshold(data.fallback_treshold);
+        setUnexpectedIntentPolicyEpoch(data.unexpected_intent_policy_epoch);
 
         const responseUtterance = await api.get(
           `${process.env.REACT_APP_API_URL}/utterance`
@@ -92,11 +93,11 @@ export default function ModelConfigurationPage() {
         unexpected_intent_policy_epoch: parseInt(unexpectedIntentPolicyEpoch),
       };
 
-      await api.put(
+      const res = await api.put(
         `${process.env.REACT_APP_API_URL}/configuration/${modelConfigurationData.id}`,
         payload
       );
-
+      console.log(res);
       console.log("Success Save Configuration");
       setSuccess("success save current configuration");
       setTimeout(() => {

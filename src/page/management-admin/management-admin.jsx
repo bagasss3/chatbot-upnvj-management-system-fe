@@ -110,7 +110,7 @@ export default function ManagementAdminPage() {
             <Modal.Body>
               <div className="text-center">
                 <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                  Are you sure you want to delete this product?
+                  Are you sure you want to delete this admin?
                 </h3>
                 <div className="flex justify-center gap-4">
                   <Button color="failure" onClick={handleDelete}>

@@ -354,28 +354,40 @@ export default function IntentPage() {
                       className="bg-white dark:border-gray-700 dark:bg-gray-800"
                       key={intent?.id}
                     >
-                      <Table.Cell
-                        className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
-                        onClick={() => onClickIntentName(index)}
-                      >
-                        {intent?.name}
-                      </Table.Cell>
-                      <Table.Cell>
-                        <a
-                          href={`/intent/edit/${intent?.id}`}
-                          className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                      {intent?.id !== "1" ? (
+                        <Table.Cell
+                          className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
+                          onClick={() => onClickIntentName(index)}
                         >
-                          Edit
-                        </a>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <button
-                          onClick={() => onClickDelete(index)}
-                          className="font-medium text-red-600 hover:underline dark:text-blue-500"
-                        >
-                          Delete
-                        </button>
-                      </Table.Cell>
+                          {intent?.name}
+                        </Table.Cell>
+                      ) : (
+                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                          {intent?.name}
+                        </Table.Cell>
+                      )}
+
+                      {intent?.id !== "1" && (
+                        <Table.Cell>
+                          <a
+                            href={`/intent/edit/${intent?.id}`}
+                            className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                          >
+                            Edit
+                          </a>
+                        </Table.Cell>
+                      )}
+
+                      {intent?.id !== "1" && (
+                        <Table.Cell>
+                          <button
+                            onClick={() => onClickDelete(index)}
+                            className="font-medium text-red-600 hover:underline dark:text-blue-500"
+                          >
+                            Delete
+                          </button>
+                        </Table.Cell>
+                      )}
                     </Table.Row>
                   ))}
                 </Table.Body>
@@ -537,15 +549,17 @@ export default function IntentPage() {
                           className="bg-white dark:border-gray-700 dark:bg-gray-800"
                           key={example?.id}
                         >
-                          <Table.Cell
-                            className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
-                            onClick={() => onClickIntentName(index)}
-                          >
-                            <span
-                              dangerouslySetInnerHTML={{
-                                __html: addBgColor(example?.example),
-                              }}
-                            />{" "}
+                          <Table.Cell>
+                            <div
+                              className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
+                              onClick={() => onClickIntentName(index)}
+                            >
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: addBgColor(example?.example),
+                                }}
+                              />
+                            </div>
                           </Table.Cell>
                           <Table.Cell>
                             <button
@@ -585,7 +599,7 @@ export default function IntentPage() {
               <Modal.Body>
                 <div className="text-center">
                   <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    Are you sure you want to delete this product?
+                    Are you sure you want to delete this intent?
                   </h3>
                   <div className="flex justify-center gap-4">
                     <Button color="failure" onClick={handleDelete}>
