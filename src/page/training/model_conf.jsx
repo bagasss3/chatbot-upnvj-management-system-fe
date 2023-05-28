@@ -296,7 +296,7 @@ export default function ModelConfigurationPage() {
                   <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
                     RulePolicy
                   </h3>
-                  <div>
+                  {/* <div>
                     <label>core_fallback_threshold</label>
                     <input
                       className="flex mb-3"
@@ -321,7 +321,7 @@ export default function ModelConfigurationPage() {
                         </option>
                       ))}
                     </select>
-                  </div>
+                  </div> */}
                 </li>
               </ol>
             </div>
