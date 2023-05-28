@@ -159,7 +159,11 @@ export default function UtterancePage() {
               {selectedUtteranceData ? (
                 <div>
                   <h2 className="text-2xl font-bold py-6 ml-3">Response</h2>
-                  <p disabled className="ml-3">
+                  <p
+                    disabled
+                    className="ml-3"
+                    style={{ whiteSpace: "pre-line" }}
+                  >
                     {selectedUtteranceData.response}
                   </p>
                   {/* Add any other fields that you want to display here */}

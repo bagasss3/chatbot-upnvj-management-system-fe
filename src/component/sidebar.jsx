@@ -13,6 +13,7 @@ export default function SidebarNav() {
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           <Sidebar.Item href="/">Dashboard</Sidebar.Item>
+          <Sidebar.Item href="/chat">Chat</Sidebar.Item>
           <Sidebar.Item href="/log">Chat Log</Sidebar.Item>
           <Sidebar.Collapse label="Management">
             {user?.role === "SUPER_ADMIN" && (
