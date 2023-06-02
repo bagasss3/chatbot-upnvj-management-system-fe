@@ -234,7 +234,7 @@ export default function IntentPage() {
   }
 
   const handleEntityClick = (name) => {
-    setExample(`[value](${name})`);
+    setExample(`${example}[value](${name})`);
   };
 
   const handleEntityClickButton = () => {

@@ -121,7 +121,7 @@ export default function EditRulePage() {
     setInputType(type);
     try {
       let response;
-      if (type === "ACTION") {
+      if (type === "ACTION_HTTP") {
         response = await api.get(
           `${process.env.REACT_APP_API_URL}/action/http`
         );
@@ -217,7 +217,7 @@ export default function EditRulePage() {
                       <button
                         className="border py-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white"
                         type="button"
-                        onClick={() => handleInputTypeSelect("ACTION")}
+                        onClick={() => handleInputTypeSelect("ACTION_HTTP")}
                       >
                         Action
                       </button>
