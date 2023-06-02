@@ -15,12 +15,9 @@ export default function SidebarNav() {
           <Sidebar.Item href="/">Dashboard</Sidebar.Item>
           <Sidebar.Item href="/chat">Chat</Sidebar.Item>
           <Sidebar.Item href="/log">Chat Log</Sidebar.Item>
-          <Sidebar.Collapse label="Management">
-            {user?.role === "SUPER_ADMIN" && (
-              <Sidebar.Item href="/admin">Admin</Sidebar.Item>
-            )}
-            <Sidebar.Item href="/action/krs">KRS Action</Sidebar.Item>
-          </Sidebar.Collapse>
+          {user?.role === "SUPER_ADMIN" && (
+            <Sidebar.Item href="/admin">Admin</Sidebar.Item>
+          )}
           <Sidebar.Item href="/conversation">Conversation</Sidebar.Item>
           <Sidebar.Collapse label="Component">
             <Sidebar.Item href="/intent">Intent</Sidebar.Item>

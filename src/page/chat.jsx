@@ -1,4 +1,3 @@
-import "../asset/css/chatbot.css";
 import { useEffect, useState, useRef } from "react";
 import { IoMdSend } from "react-icons/io";
 import { BiBot, BiUser } from "react-icons/bi";
