@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
@@ -9,7 +9,9 @@ export default function AddAdminPage() {
   const [password, setPassword] = useState("");
   const [repassword, setRePassword] = useState("");
   const [name, setName] = useState("");
-  const [majorId, setMajorId] = useState("");
+  const [faculties, setFaculties] = useState([]);
+  const [selectedFaculty, setSelectedFaculty] = useState("");
+  const [selectedMajor, setSelectedMajor] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -31,9 +33,29 @@ export default function AddAdminPage() {
     setName(e.target.value);
   }
 
-  function handleMajorIdChange(e) {
-    setMajorId(e.target.value);
+  function handleFacultyChange(e) {
+    setSelectedFaculty(e.target.value);
+    setSelectedMajor("");
   }
+
+  function handleMajorChange(e) {
+    setSelectedMajor(e.target.value);
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(
+          `${process.env.REACT_APP_API_URL}/faculties`
+        );
+        console.log(response);
+        setFaculties(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [api]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -45,7 +67,7 @@ export default function AddAdminPage() {
         password,
         repassword,
         type: "ADMIN",
-        major_id: majorId,
+        major_id: selectedMajor,
       };
 
       await api.post(`${process.env.REACT_APP_API_URL}/user`, payload);
@@ -53,7 +75,8 @@ export default function AddAdminPage() {
       setPassword("");
       setRePassword("");
       setName("");
-      setMajorId("");
+      setSelectedFaculty("");
+      setSelectedMajor("");
 
       console.log("Success Add Admin");
       navigate("/admin");
@@ -109,14 +132,40 @@ export default function AddAdminPage() {
                     />
                   </div>
                   <div className="flex flex-col py-2">
-                    <input
+                    <select
+                      className="border p-2"
+                      id="facultyId"
+                      value={selectedFaculty}
+                      onChange={handleFacultyChange}
+                      placeholder="Choose Faculty"
+                    >
+                      <option value="">Select Faculty</option>
+                      {faculties.map((faculty) => (
+                        <option key={faculty.id} value={faculty.id}>
+                          {faculty.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <select
                       className="border p-2"
                       id="majorId"
-                      type="text"
-                      value={majorId}
-                      onChange={handleMajorIdChange}
+                      value={selectedMajor}
+                      onChange={handleMajorChange}
                       placeholder="Choose Major"
-                    />
+                      disabled={!selectedFaculty}
+                    >
+                      <option value="">Select Major</option>
+                      {selectedFaculty &&
+                        faculties
+                          .find((faculty) => faculty.id === selectedFaculty)
+                          .majors.map((major) => (
+                            <option key={major.id} value={major.id}>
+                              {major.name}
+                            </option>
+                          ))}
+                    </select>
                   </div>
                   <div className="flex flex-col py-2">
                     <input
