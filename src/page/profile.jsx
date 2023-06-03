@@ -15,6 +15,7 @@ export default function LoginPage() {
         const response = await api.get(
           `${process.env.REACT_APP_API_URL}/user/profile`
         );
+        console.log(response.data);
         setUserProfileData(response.data);
       } catch (error) {
         console.log(error);
@@ -59,6 +60,11 @@ export default function LoginPage() {
               <h5 className="mb-2 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
                 Role : {userProfileData?.type}
               </h5>
+              {userProfileData?.type === "ADMIN" && (
+                <h5 className="mb-2 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
+                  Jurusan : {userProfileData?.major["name"]}
+                </h5>
+              )}
               <h5 className="mb-2 text-2xl font-normal tracking-tight text-gray-900 dark:text-white">
                 Tanggal Akun Dibuat :{" "}
                 {new Date(userProfileData?.created_at).toLocaleDateString()}

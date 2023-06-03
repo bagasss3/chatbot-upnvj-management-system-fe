@@ -8,7 +8,9 @@ export default function EditAdminPage() {
   const { id } = useParams();
 
   const [name, setName] = useState("");
-  const [majorId, setMajorId] = useState("");
+  const [faculties, setFaculties] = useState([]);
+  const [selectedFaculty, setSelectedFaculty] = useState("");
+  const [selectedMajor, setSelectedMajor] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,7 +25,12 @@ export default function EditAdminPage() {
         );
         const data = response.data;
         setName(data.name);
-        setMajorId(data.major_id);
+        setSelectedMajor(data.major_id);
+        setSelectedFaculty(data.major.faculty_id);
+        const responseFaculties = await api.get(
+          `${process.env.REACT_APP_API_URL}/faculties`
+        );
+        setFaculties(responseFaculties.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -38,8 +45,13 @@ export default function EditAdminPage() {
     setName(e.target.value);
   }
 
-  function handleMajorIdChange(e) {
-    setMajorId(e.target.value);
+  function handleFacultyChange(e) {
+    setSelectedFaculty(e.target.value);
+    setSelectedMajor("");
+  }
+
+  function handleMajorChange(e) {
+    setSelectedMajor(e.target.value);
   }
 
   async function handleSubmit(e) {
@@ -48,12 +60,13 @@ export default function EditAdminPage() {
     try {
       let payload = {
         name,
-        major_id: majorId,
+        major_id: selectedMajor,
       };
 
       await api.put(`${process.env.REACT_APP_API_URL}/user/${id}`, payload);
       setName("");
-      setMajorId("");
+      setSelectedMajor("");
+      setSelectedFaculty("");
 
       console.log("Success Edit Admin");
       navigate("/admin");
@@ -99,14 +112,40 @@ export default function EditAdminPage() {
                     />
                   </div>
                   <div className="flex flex-col py-2">
-                    <input
+                    <select
+                      className="border p-2"
+                      id="facultyId"
+                      value={selectedFaculty}
+                      onChange={handleFacultyChange}
+                      placeholder="Choose Faculty"
+                    >
+                      <option value="">Select Faculty</option>
+                      {faculties.map((faculty) => (
+                        <option key={faculty.id} value={faculty.id}>
+                          {faculty.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <select
                       className="border p-2"
                       id="majorId"
-                      type="text"
-                      value={majorId}
-                      onChange={handleMajorIdChange}
+                      value={selectedMajor}
+                      onChange={handleMajorChange}
                       placeholder="Choose Major"
-                    />
+                      disabled={!selectedFaculty}
+                    >
+                      <option value="">Select Major</option>
+                      {selectedFaculty &&
+                        faculties
+                          .find((faculty) => faculty.id === selectedFaculty)
+                          ?.majors?.map((major) => (
+                            <option key={major.id} value={major.id}>
+                              {major.name}
+                            </option>
+                          ))}
+                    </select>
                   </div>
                   {error && <div className="text-red-500 py-2">{error}</div>}
                   <button

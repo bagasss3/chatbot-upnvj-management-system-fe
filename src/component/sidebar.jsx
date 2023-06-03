@@ -16,7 +16,7 @@ export default function SidebarNav() {
           <Sidebar.Item href="/chat">Chat</Sidebar.Item>
           <Sidebar.Item href="/log">Chat Log</Sidebar.Item>
           {user?.role === "SUPER_ADMIN" && (
-            <Sidebar.Item href="/admin">Admin</Sidebar.Item>
+            <Sidebar.Item href="/admin">Management Admin</Sidebar.Item>
           )}
           <Sidebar.Item href="/conversation">Conversation</Sidebar.Item>
           <Sidebar.Collapse label="Component">

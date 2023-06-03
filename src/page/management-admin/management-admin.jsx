@@ -76,7 +76,7 @@ export default function ManagementAdminPage() {
                   </Table.Cell>
                   <Table.Cell>{admin?.name}</Table.Cell>
                   <Table.Cell>{admin?.email}</Table.Cell>
-                  <Table.Cell>{admin?.major_id}</Table.Cell>
+                  <Table.Cell>{admin?.major["name"]}</Table.Cell>
                   <Table.Cell>
                     {new Date(admin?.created_at).toLocaleDateString()}
                   </Table.Cell>
