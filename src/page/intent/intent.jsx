@@ -99,7 +99,7 @@ export default function IntentPage() {
         payload
       );
       setExample("");
-      const newExample = [...exampleData, response.data];
+      const newExample = [response.data, ...exampleData];
       setExampleData(newExample);
       console.log("Success Add Example");
     } catch (error) {
