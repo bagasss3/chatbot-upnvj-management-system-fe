@@ -117,6 +117,10 @@ export default function AddActionPage() {
     e.preventDefault();
     setIsLoading(true);
     try {
+      if (getFields.length <= 0) {
+        setError("Request Body for Http Get Request are empty");
+        return;
+      }
       let payload = {
         name,
         get_http_req: getHttpReq,

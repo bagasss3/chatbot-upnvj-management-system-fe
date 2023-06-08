@@ -23,6 +23,7 @@ export default function TrainingModelPage() {
         const response = await api.get(
           `${process.env.REACT_APP_API_URL}/training-history`
         );
+        console.log(response.data);
         setTrainingHistoryData(response.data);
       } catch (error) {
         console.log(error);
@@ -37,8 +38,12 @@ export default function TrainingModelPage() {
     try {
       const res = await api.get(`${process.env.REACT_APP_API_URL}/train`);
       setStartTrain(false);
-      setTrainingHistoryData([...trainingHistoryData, res.data]);
-      setSuccess("Success Train New Data Model");
+      setTrainingHistoryData([res.data, ...trainingHistoryData]);
+      if (res.data.status === "FAILED") {
+        setError("Failed Train New Data Model");
+      } else {
+        setSuccess("Success Train New Data Model");
+      }
     } catch (err) {
       setStartTrain(false);
       setError(err.response.data.message);
@@ -91,7 +96,7 @@ export default function TrainingModelPage() {
                 <Table.Head>
                   <Table.HeadCell>No</Table.HeadCell>
                   <Table.HeadCell>User</Table.HeadCell>
-                  <Table.HeadCell>Total Time</Table.HeadCell>
+                  <Table.HeadCell>Total Time (Second)</Table.HeadCell>
                   <Table.HeadCell>Status</Table.HeadCell>
                   <Table.HeadCell>Tanggal dibuat</Table.HeadCell>
                 </Table.Head>
@@ -104,7 +109,12 @@ export default function TrainingModelPage() {
                       <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                         {index + 1}
                       </Table.Cell>
-                      <Table.Cell>{data?.user_id}</Table.Cell>
+                      {data?.user != null ? (
+                        <Table.Cell>{data?.user["email"]}</Table.Cell>
+                      ) : (
+                        <Table.Cell>ACCOUNT DELETED</Table.Cell>
+                      )}
+                      {/* <Table.Cell>{data?.user["email"]}</Table.Cell> */}
                       <Table.Cell>{data?.total_time}</Table.Cell>
                       <Table.Cell>{data?.status}</Table.Cell>
                       <Table.Cell>
