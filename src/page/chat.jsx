@@ -63,6 +63,16 @@ export default function ChatPage() {
 
           setChat((chat) => [...chat, responseTemp]);
         }
+      })
+      .catch((err) => {
+        const responseTemp = {
+          sender: "bot",
+          recipientId: "errorRecipient",
+          msg: "Tidak dapat menerima pesan dari ChatVeteran, mohon periksa kondisi chatbot",
+        };
+
+        setBotTyping(false);
+        setChat((chat) => [...chat, responseTemp]);
       });
   };
 
