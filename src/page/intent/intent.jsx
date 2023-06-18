@@ -236,6 +236,7 @@ export default function IntentPage() {
 
   const handleEntityClick = (name) => {
     setExample(`${example}[value](${name})`);
+    setShowEntityInput(false);
   };
 
   const handleEntityClickButton = () => {
@@ -408,16 +409,18 @@ export default function IntentPage() {
                       className="max-w-[400px] w-full bg-white ml-3"
                       onSubmit={handleSubmitExample}
                     >
-                      <div className="flex flex-col py-2">
-                        <input
-                          className="border p-2"
-                          id="example"
-                          type="text"
-                          value={example}
-                          onChange={handleExampleChange}
-                          placeholder="Enter Example"
-                        />
-                      </div>
+                      {!showEntityInput && (
+                        <div className="flex flex-col py-2">
+                          <input
+                            className="border p-2"
+                            id="example"
+                            type="text"
+                            value={example}
+                            onChange={handleExampleChange}
+                            placeholder="Enter Example"
+                          />
+                        </div>
+                      )}
                       {error && (
                         <div className="text-red-500 py-2">{error}</div>
                       )}
@@ -474,7 +477,7 @@ export default function IntentPage() {
                       )}
                       {entity === "" ? (
                         <button
-                          className="border w-full my-2 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
+                          className="border w-full my-2 py-2 bg-green-600 hover:bg-green-500 text-white"
                           disabled={isLoading}
                           type="button"
                           onClick={handleEntityClickButton}
@@ -484,7 +487,7 @@ export default function IntentPage() {
                       ) : (
                         <div>
                           <button
-                            className="border w-full my-2 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
+                            className="border w-full my-2 py-2 bg-green-600 hover:bg-green-500 text-white"
                             disabled={isLoading}
                             type="button"
                             onClick={handleEntitySaveButton}
@@ -503,13 +506,15 @@ export default function IntentPage() {
                           {isLoading ? "Batal ..." : "Batal"}
                         </button>
                       )}
-                      <button
-                        className="border w-full my-2 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                        type="submit"
-                        disabled={isLoading}
-                      >
-                        {isLoading ? "Tambah Example..." : "Tambah Example"}
-                      </button>
+                      {!showEntityInput && (
+                        <button
+                          className="border w-full my-2 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
+                          type="submit"
+                          disabled={isLoading}
+                        >
+                          {isLoading ? "Tambah Example..." : "Tambah Example"}
+                        </button>
+                      )}
                     </form>
                   ) : (
                     <div>
@@ -623,7 +628,7 @@ export default function IntentPage() {
               <Modal.Body>
                 <div className="text-center">
                   <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    Are you sure you want to delete this product?
+                    Are you sure you want to delete this data?
                   </h3>
                   <div className="flex justify-center gap-4">
                     <Button color="failure" onClick={handleDeleteExample}>
@@ -643,7 +648,7 @@ export default function IntentPage() {
               <Modal.Body>
                 <div className="text-center">
                   <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                    Are you sure you want to delete this product?
+                    Are you sure you want to delete this data?
                   </h3>
                   <div className="flex justify-center gap-4">
                     <Button color="failure" onClick={handleDeleteEntity}>
