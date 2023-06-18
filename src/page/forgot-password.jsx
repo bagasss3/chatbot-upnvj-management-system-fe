@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import iconKirim from "../asset/icon-kirim.svg";
+import { Helmet } from "react-helmet";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -48,6 +49,9 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-5 h-screen w-full">
+      <Helmet>
+        <title>Forgot Password</title>
+      </Helmet>
       <LoginRegisterGrid />
       <div className="flex flex-col justify-center col-span-3 sm:col-span-3">
         <form

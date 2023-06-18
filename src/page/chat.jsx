@@ -3,6 +3,7 @@ import { IoMdSend } from "react-icons/io";
 import { BiBot, BiUser } from "react-icons/bi";
 import Navbar from "../component/navbar";
 import SidebarNav from "../component/sidebar";
+import { Helmet } from "react-helmet";
 
 export default function ChatPage() {
   const [chat, setChat] = useState([]);
@@ -67,6 +68,9 @@ export default function ChatPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Chat</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

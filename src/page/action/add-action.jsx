@@ -4,6 +4,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function AddActionPage() {
   const [name, setName] = useState("");
@@ -176,6 +177,9 @@ export default function AddActionPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Add Action</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

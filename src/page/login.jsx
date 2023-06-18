@@ -2,6 +2,7 @@ import LoginRegisterGrid from "../component/loginRegisterGrid";
 import React, { useState, useContext } from "react";
 import AuthContext from "../component/shared/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function LoginPage() {
   const { login } = useContext(AuthContext);
@@ -50,6 +51,9 @@ export default function LoginPage() {
   }
   return (
     <div className="grid grid-cols-1 sm:grid-cols-5 h-screen w-full">
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <LoginRegisterGrid />
       <div className="flex flex-col justify-center col-span-3 sm:col-span-3">
         <form

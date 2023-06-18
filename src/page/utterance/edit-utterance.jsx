@@ -3,6 +3,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function EditUtterancePage() {
   const { id } = useParams();
@@ -76,6 +77,9 @@ export default function EditUtterancePage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Edit Utterance</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

@@ -5,6 +5,7 @@ import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function EditActionReqBodyPage() {
   const { id, method } = useParams();
@@ -162,6 +163,9 @@ export default function EditActionReqBodyPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Edit Request Body</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

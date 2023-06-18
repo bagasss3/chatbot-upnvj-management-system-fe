@@ -4,6 +4,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import SearchComponent from "../../component/searchbar";
+import { Helmet } from "react-helmet";
 
 export default function ActionPage() {
   const [actionData, setActionData] = useState([]);
@@ -102,6 +103,9 @@ export default function ActionPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Action</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

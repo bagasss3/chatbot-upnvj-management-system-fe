@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
+import { Helmet } from "react-helmet";
 
 export default function ModelConfigurationPage() {
   const [modelConfigurationData, setModelConfigurationData] = useState(null);
@@ -118,6 +119,9 @@ export default function ModelConfigurationPage() {
   }
   return (
     <div>
+      <Helmet>
+        <title>Model Configuration</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

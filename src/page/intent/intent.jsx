@@ -4,6 +4,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import SearchComponent from "../../component/searchbar";
+import { Helmet } from "react-helmet";
 
 export default function IntentPage() {
   const [example, setExample] = useState("");
@@ -314,6 +315,9 @@ export default function IntentPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Intent</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

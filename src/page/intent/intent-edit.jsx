@@ -3,6 +3,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function EditIntentPage() {
   const { id } = useParams();
@@ -65,6 +66,9 @@ export default function EditIntentPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Edit Intent</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

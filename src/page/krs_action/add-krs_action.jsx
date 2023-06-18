@@ -3,6 +3,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function AddKrsActionPage() {
   const [name, setName] = useState("");
@@ -58,6 +59,9 @@ export default function AddKrsActionPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Add KRS Action</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">
