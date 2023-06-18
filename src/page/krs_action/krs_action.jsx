@@ -3,6 +3,7 @@ import { Button, Table, Modal } from "flowbite-react";
 import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
+import { Helmet } from "react-helmet";
 
 export default function KrsActionPage() {
   const [krsActionData, setKrsActionData] = useState([]);
@@ -52,6 +53,9 @@ export default function KrsActionPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>KRS Action</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

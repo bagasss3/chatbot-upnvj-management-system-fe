@@ -3,6 +3,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function AddRulePage() {
   const [ruleTitle, setRuleTitle] = useState("");
@@ -115,6 +116,9 @@ export default function AddRulePage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Add Rule</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

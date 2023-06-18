@@ -4,6 +4,7 @@ import { Button, Modal } from "flowbite-react";
 import SidebarNav from "../../component/sidebar";
 import SearchComponent from "../../component/searchbar";
 import useAxios from "../../interceptor/useAxios";
+import { Helmet } from "react-helmet";
 
 export default function ConversationPage() {
   const [addConversation, setAddConversation] = useState(false);
@@ -110,6 +111,9 @@ export default function ConversationPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Conversation</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

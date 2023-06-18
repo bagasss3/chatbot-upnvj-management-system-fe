@@ -3,6 +3,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function AddAdminPage() {
   const [email, setEmail] = useState("");
@@ -96,6 +97,9 @@ export default function AddAdminPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Add Admin</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

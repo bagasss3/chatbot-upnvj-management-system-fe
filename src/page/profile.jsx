@@ -4,6 +4,7 @@ import Navbar from "../component/navbar";
 import ProfileLogo from "../asset/profilelogo.svg";
 import SidebarNav from "../component/sidebar";
 import useAxios from "../interceptor/useAxios";
+import { Helmet } from "react-helmet";
 
 export default function LoginPage() {
   const [userProfileData, setUserProfileData] = useState(null);
@@ -25,6 +26,9 @@ export default function LoginPage() {
   }, [api]);
   return (
     <div>
+      <Helmet>
+        <title>Profile</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

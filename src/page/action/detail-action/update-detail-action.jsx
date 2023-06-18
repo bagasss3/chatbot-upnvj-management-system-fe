@@ -3,6 +3,7 @@ import Navbar from "../../../component/navbar";
 import SidebarNav from "../../../component/sidebar";
 import useAxios from "../../../interceptor/useAxios";
 import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function UpdateActionDetailPage() {
   const { id, dataId } = useParams();
@@ -89,6 +90,9 @@ export default function UpdateActionDetailPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Update Detail Action</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

@@ -3,6 +3,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function AddStoryPage() {
   const [storyTitle, setStoryTitle] = useState("");
@@ -108,6 +109,9 @@ export default function AddStoryPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Add Story</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

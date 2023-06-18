@@ -3,6 +3,7 @@ import { Table } from "flowbite-react";
 import Navbar from "../component/navbar";
 import SidebarNav from "../component/sidebar";
 import useAxios from "../interceptor/useAxios";
+import { Helmet } from "react-helmet";
 
 export default function DashboardPage() {
   const [intentData, setIntentData] = useState(0);
@@ -48,6 +49,9 @@ export default function DashboardPage() {
   }, [api]);
   return (
     <div>
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

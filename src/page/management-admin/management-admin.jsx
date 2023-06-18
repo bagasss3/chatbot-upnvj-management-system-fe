@@ -3,6 +3,7 @@ import { Button, Table, Modal } from "flowbite-react";
 import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
+import { Helmet } from "react-helmet";
 
 export default function ManagementAdminPage() {
   const [adminData, setAdminData] = useState([]);
@@ -48,6 +49,9 @@ export default function ManagementAdminPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Management Admin</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

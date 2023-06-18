@@ -3,6 +3,7 @@ import { Table } from "flowbite-react";
 import Navbar from "../component/navbar";
 import SidebarNav from "../component/sidebar";
 import useAxios from "../interceptor/useAxios";
+import { Helmet } from "react-helmet";
 
 export default function FallbackChatLogPage() {
   const [fallbackChatLogData, setFallbackChatLogData] = useState([]);
@@ -73,6 +74,9 @@ export default function FallbackChatLogPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Fallback Chat Log</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

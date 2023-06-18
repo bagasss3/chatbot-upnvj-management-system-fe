@@ -1,10 +1,14 @@
 import LoginRegisterGrid from "../component/loginRegisterGrid";
 import React from "react";
 import iconSuccessForgotPass from "../asset/icon-sukses.svg";
+import { Helmet } from "react-helmet";
 
 export default function SuccessForgotPasswordPage() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-5 h-screen w-full">
+      <Helmet>
+        <title>Success Forgot Password</title>
+      </Helmet>
       <LoginRegisterGrid />
       <div className="flex flex-col justify-center col-span-3 sm:col-span-3">
         <div className="max-w-[400px] w-full mx-auto bg-white p-4">

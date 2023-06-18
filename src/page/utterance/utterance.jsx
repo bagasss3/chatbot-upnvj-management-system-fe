@@ -4,6 +4,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import SearchComponent from "../../component/searchbar";
+import { Helmet } from "react-helmet";
 
 export default function UtterancePage() {
   const [utteranceData, setUtteranceData] = useState([]);
@@ -88,6 +89,9 @@ export default function UtterancePage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Utterance</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

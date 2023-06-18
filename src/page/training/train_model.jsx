@@ -4,6 +4,7 @@ import Navbar from "../../component/navbar";
 import TrainingLogo from "../../asset/login_training.svg";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
+import { Helmet } from "react-helmet";
 
 export default function TrainingModelPage() {
   const [trainingHistoryData, setTrainingHistoryData] = useState([]);
@@ -53,6 +54,9 @@ export default function TrainingModelPage() {
   }
   return (
     <div>
+      <Helmet>
+        <title>Train Model</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">

@@ -3,6 +3,7 @@ import Navbar from "../../component/navbar";
 import SidebarNav from "../../component/sidebar";
 import useAxios from "../../interceptor/useAxios";
 import { useNavigate, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 export default function EditAdminPage() {
   const { id } = useParams();
@@ -86,6 +87,9 @@ export default function EditAdminPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Edit Admin</title>
+      </Helmet>
       <Navbar />
       <SidebarNav />
       <div className="p-4 sm:ml-64">
