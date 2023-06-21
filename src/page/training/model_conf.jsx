@@ -105,10 +105,18 @@ export default function ModelConfigurationPage() {
         setSuccess("");
       }, 5000);
     } catch (error) {
-      if (error.response.data.message === "unauthorized") {
-        setError("no permission to edit configuration");
+      if (error.response.statusText === "Bad Request") {
+        const errorData = JSON.parse(error.response.data.message);
+        const errorMessages = Object.entries(errorData).map(
+          ([key, value]) => `- ${key} ${value}`
+        );
+        setError(errorMessages);
       } else {
-        setError(error.response.data.message);
+        if (error.response.data.message === "unauthorized") {
+          setError("no permission to edit configuration");
+        } else {
+          setError(error.response.message);
+        }
       }
       setTimeout(() => {
         setError("");

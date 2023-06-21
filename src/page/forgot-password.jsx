@@ -34,10 +34,18 @@ export default function ForgotPasswordPage() {
         navigate("/forgot-password/success");
       }
     } catch (error) {
-      if (error.response.data.message === "unauthorized") {
-        setError("wrong email or password");
+      if (error.response.statusText === "Bad Request") {
+        const errorData = JSON.parse(error.response.data.message);
+        const errorMessages = Object.entries(errorData).map(
+          ([key, value]) => `- ${key} ${value}`
+        );
+        setError(errorMessages);
       } else {
-        setError(error.response.data.message);
+        if (error.response.data.message === "unauthorized") {
+          setError("wrong email or password");
+        } else {
+          setError(error.response.message);
+        }
       }
       setTimeout(() => {
         setError("");
@@ -75,7 +83,15 @@ export default function ForgotPasswordPage() {
               onChange={handleEmailChange}
               placeholder="Enter your email"
             />
-            {error && <div className="text-red-500 py-2">{error}</div>}
+            {error && (
+              <div className="text-red-500 py-2">
+                {Array.isArray(error)
+                  ? error.map((message, index) => (
+                      <div key={index}>{message}</div>
+                    ))
+                  : error}
+              </div>
+            )}
           </div>
           <button
             type="submit"

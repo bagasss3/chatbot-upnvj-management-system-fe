@@ -46,10 +46,18 @@ export default function AddStoryPage() {
       console.log("Success Add Story");
       navigate("/conversation");
     } catch (error) {
-      if (error.response.data.message === "unauthorized") {
-        setError("no permission to add intent");
+      if (error.response.statusText === "Bad Request") {
+        const errorData = JSON.parse(error.response.data.message);
+        const errorMessages = Object.entries(errorData).map(
+          ([key, value]) => `- ${key} ${value}`
+        );
+        setError(errorMessages);
       } else {
-        setError(error.response.data.message);
+        if (error.response.data.message === "unauthorized") {
+          setError("no permission to add story");
+        } else {
+          setError(error.response.message);
+        }
       }
       setTimeout(() => {
         setError("");
@@ -203,7 +211,15 @@ export default function AddStoryPage() {
                       Action
                     </button>
                   </div>
-                  {error && <div className="text-red-500 py-2">{error}</div>}
+                  {error && (
+                    <div className="text-red-500 py-2">
+                      {Array.isArray(error)
+                        ? error.map((message, index) => (
+                            <div key={index}>{message}</div>
+                          ))
+                        : error}
+                    </div>
+                  )}
                   <button
                     className="border w-full my-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
                     type="submit"
