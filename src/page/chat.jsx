@@ -37,7 +37,7 @@ export default function ChatPage() {
   };
 
   const rasaAPI = async function handleClick(name, msg) {
-    await fetch("http://localhost:5005/webhooks/rest/webhook", {
+    await fetch(`${process.env.REACT_APP_API_URL}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
