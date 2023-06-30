@@ -37,7 +37,7 @@ export default function ChatPage() {
   };
 
   const rasaAPI = async function handleClick(name, msg) {
-    await fetch(`${process.env.REACT_APP_API_URL}`, {
+    await fetch(`${process.env.RASA_CHAT}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
