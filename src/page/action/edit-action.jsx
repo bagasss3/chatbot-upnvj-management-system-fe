@@ -183,6 +183,7 @@ export default function EditActionPage() {
                       value={name}
                       onChange={handleNameChange}
                       placeholder="Enter Action Name"
+                      disabled={name === "action_provide_intent_options"}
                     />
                   </div>
                   <div className="flex flex-col py-2">
