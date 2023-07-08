@@ -16,28 +16,39 @@ const useAxios = () => {
       return config;
     }
     const currRefreshToken = Cookies.get("refreshToken");
-    let response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/refresh-token`,
-      { refreshtoken: currRefreshToken }
-    );
-    const {
-      access_token,
-      refresh_token,
-      access_token_expired_at,
-      refresh_token_expired_at,
-    } = response.data;
+    try {
+      let response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/refresh-token`,
+        { refreshtoken: currRefreshToken }
+      );
 
-    Cookies.set("accessToken", access_token, {
-      expires: new Date(access_token_expired_at),
-    });
-    Cookies.set("refreshToken", refresh_token, {
-      expires: new Date(refresh_token_expired_at),
-    });
+      const {
+        access_token,
+        refresh_token,
+        access_token_expired_at,
+        refresh_token_expired_at,
+      } = response.data;
 
-    setUser(jwt_decode(access_token));
+      Cookies.set("accessToken", access_token, {
+        expires: new Date(access_token_expired_at),
+      });
+      Cookies.set("refreshToken", refresh_token, {
+        expires: new Date(refresh_token_expired_at),
+      });
 
-    config.headers.Authorization = `Bearer ${access_token}`;
-    return config;
+      setUser(jwt_decode(access_token));
+
+      config.headers.Authorization = `Bearer ${access_token}`;
+      return config;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        Cookies.remove("refreshToken");
+        setUser(null);
+        // Redirect to the login page
+        window.location.href = "/login";
+      }
+      throw error;
+    }
   });
 
   return axiosInstance;
