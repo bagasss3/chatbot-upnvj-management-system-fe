@@ -63,7 +63,7 @@ export default function IntentPage() {
       );
       console.log(response);
       setSelectedIntentData(response.data);
-
+      console.log("halo:", selectedIntentData);
       const responseExample = await api.get(
         `${process.env.REACT_APP_API_URL}/example/${intent.id}`
       );
@@ -344,6 +344,15 @@ export default function IntentPage() {
                   <h2 className="text-2xl font-bold py-6 ml-3">
                     {selectedIntentData.name}
                   </h2>
+                  {selectedIntentData.is_information_academic ? (
+                    <h4 className="text-2l font-bold py-2 ml-3">
+                      Information Academic
+                    </h4>
+                  ) : (
+                    <h4 className="text-2l font-bold py-2 ml-3">
+                      Not Information Academic
+                    </h4>
+                  )}
                 </div>
               ) : (
                 <h2 className="text-2xl font-bold py-6 ml-3">
