@@ -9,6 +9,7 @@ export default function EditIntentPage() {
   const { id } = useParams();
 
   const [name, setName] = useState("");
+  const [isInformationAcademics, setIsInformationAcademics] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export default function EditIntentPage() {
         );
         const data = response.data;
         setName(data.name);
+        setIsInformationAcademics(data.is_information_academic);
       } catch (error) {
         console.error(error);
       } finally {
@@ -37,16 +39,22 @@ export default function EditIntentPage() {
     setName(e.target.value);
   }
 
+  function handleInformationAcademicsChange(e) {
+    setIsInformationAcademics(e.target.checked);
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
     try {
       let payload = {
         name,
+        is_information_academic: isInformationAcademics,
       };
-
+      console.log("payload:", payload);
       await api.put(`${process.env.REACT_APP_API_URL}/intent/${id}`, payload);
       setName("");
+      setIsInformationAcademics(false);
 
       console.log("Success Edit Intent");
       navigate("/intent");
@@ -101,6 +109,18 @@ export default function EditIntentPage() {
                       onChange={handleNameChange}
                       placeholder="Enter Utterance Name"
                     />
+                  </div>
+                  <div className="flex items-center py-2">
+                    <input
+                      className="mr-2"
+                      id="isInformaticAcademics"
+                      type="checkbox"
+                      checked={isInformationAcademics}
+                      onChange={handleInformationAcademicsChange}
+                    />
+                    <label htmlFor="isInformationAcademics">
+                      Information Academic
+                    </label>
                   </div>
                   {error && (
                     <div className="text-red-500 py-2">

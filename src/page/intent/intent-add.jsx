@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 
 export default function AddIntentPage() {
   const [name, setName] = useState("");
+  const [isInformationAcademics, setIsInformationAcademics] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -16,12 +17,17 @@ export default function AddIntentPage() {
     setName(e.target.value);
   }
 
+  function handleInformationAcademicsChange(e) {
+    setIsInformationAcademics(e.target.checked);
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
     try {
       let payload = {
         name,
+        is_information_academic: isInformationAcademics,
       };
 
       await api.post(`${process.env.REACT_APP_API_URL}/intent`, payload);
@@ -80,6 +86,18 @@ export default function AddIntentPage() {
                       onChange={handleNameChange}
                       placeholder="Enter Intent Name"
                     />
+                  </div>
+                  <div className="flex items-center py-2">
+                    <input
+                      className="mr-2"
+                      id="isInformaticAcademics"
+                      type="checkbox"
+                      checked={isInformationAcademics}
+                      onChange={handleInformationAcademicsChange}
+                    />
+                    <label htmlFor="isInformationAcademics">
+                      Information Academic
+                    </label>
                   </div>
                   {error && (
                     <div className="text-red-500 py-2">
